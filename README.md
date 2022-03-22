@@ -1,6 +1,8 @@
 # flutter_application_bouncy
 
-A new Flutter project.
+A new Flutter project
+이번 프로젝트가 잘 완료될 수 있게 비나이다 비나이다~
+.
 
 ## Getting Started
 
