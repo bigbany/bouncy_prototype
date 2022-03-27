@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_bouncy/signInPage.dart';
+import 'package:flutter_application_bouncy/signUpAndIn/signUpPageAdditionalInfo.dart';
 import 'package:flutter_application_bouncy/signUpPage.dart';
 import 'package:flutter_application_bouncy/signedPage.dart';
 import 'package:get/get.dart';
-import 'UnSignedPage.dart';
+import 'unSignedPage.dart';
 
 void main() => runApp(MyApp());
 // 최초의 위젯 진입점
@@ -29,7 +30,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/signInPage", page: ()=> signInPage(),
         transition: Transition.noTransition,popGesture: true),
         GetPage(name: "/signUpPage", page: ()=> signUpPage(),
-        transition: Transition.noTransition,popGesture: true)
+        transition: Transition.noTransition,popGesture: true),
+        GetPage(name:"/signUpPage_2",page:()=>signUpPageAdditionalInfo(),
+        transition: Transition.noTransition,popGesture: true),
+        
       ] 
 
 
