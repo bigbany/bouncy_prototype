@@ -1,10 +1,12 @@
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_bouncy/controller/signUpInformationGetxController.dart';
 import 'package:get/get.dart';
-
 import 'components/homeButton.dart';
+import 'components/signUpCheckButton.dart';
+import 'components/signUpTextFormField.dart';
 
 class signUpPage extends StatefulWidget {
   const signUpPage({Key? key}) : super(key: key);
@@ -14,131 +16,156 @@ class signUpPage extends StatefulWidget {
 }
 
 class _signUpPageState extends State<signUpPage> {
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 // form 을 사용하기 위해서 formkey 를 설정한다 .
 
-String? email;
-String? password;
+  // final _emailFocusNode = FocusNode();
+  // final _passwordFocusNode = FocusNode();
+  // final _passwordCheckFocusNode = FocusNode();
 
-@override
-void dispose(){
-  print("dispose");
-  Get.delete<SignUpInformationController>();
-  super.dispose();
-}
+  String? email;
+  String? temp_password;
+  String? password;
+  bool obscureToggle = true;
+  // obscureToggle 비밀번호 여부를 확인하기 위한 booll
+
+  @override
+  void initState() {
+    // _emailFocusNode.addListener(checkEmailFirebaseUser);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    print("dispose");
+    // _emailFocusNode.removeListener(checkEmailFirebaseUser);
+    // _emailFocusNode.dispose();
+    // _passwordFocusNode.dispose();
+    // _passwordCheckFocusNode.dispose();
+    Get.delete<SignUpInformationController>();
+    super.dispose();
+  }
+
+  // void checkEmailFirebaseUser() {
+  //   if (!_emailFocusNode.hasFocus) {
+  //     setState(() {
+  //       formKey.currentState!.validate();
+
+  //       print('firebase에서 사용된 email 인지 확인합니다.');
+  //     });
+  //   }
+  // }
+// email의 focus node 가 꺼졌을때 실행 시키는 메소드
 
 // 회원가입 페이지
   @override
   Widget build(BuildContext context) {
+    print('formKey 1의 값은 ${formKey}');
+
     Get.put(SignUpInformationController());
     //put getx controller for gain sign up information
-    //회원가입 정보를 모으기 위해 controller를 연다 
-    // 궁금한거 controller를 다른 페이지에서도 사용할 수 있는지?
+    //회원가입 정보를 모으기 위해 controller를 연다
+    // 궁금한거 controller를 다른 페이지에서도 사용할 수 있는지? => get off 하지 않는한. 다른 페이지에서도 유지된다.
     String? stateCode = Get.arguments;
     // argument를 받는 부분
     return Scaffold(
         resizeToAvoidBottomInset: false,
+        // resizeToAvoideBottomInset 키보드 넘침 방지
         appBar: AppBar(
           title: Text("signUpPage"),
           automaticallyImplyLeading: false,
+          // automaticallyImplyLeading 뒤로가기 버튼 비활성화하기
         ),
         body: Center(
           child: Form(
-            key: this._formKey,
+            // autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: this.formKey,
             // Center 위젯 안에 Form 위젯으로 감싼다. 이 안에서는 form을 이용할 수 있다.
             child: Column(children: [
-              // renderTextFormField(
-              //     label: '이름',
-              //     type: '',
-              //     onSaved: (val) {},
-              //     validator: (val) {
-              //       return null;
-              //     }),
-              renderTextFormField(
+              SizedBox(height: 30),
+              signUpTextFormField(
                 label: '이메일',
+                obscureOption: null,
+                textInputAction: TextInputAction.next,
+                onTapIconButton: () {},
                 onSaved: (val) {
-                  setState((){
-                    this.email= val;
+                  setState(() {
+                    this.email = val;
+                    Get.find<SignUpInformationController>().assignEmail(email!);
                   });
                 },
                 validator: (val) {
+                  if (val.length < 1) {
+                    return ' 이메일 입력바람';
+                  }
+                  if (!RegExp(
+                          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                      .hasMatch(val)) {
+                    return '잘못된 이메일 형식입니다.';
+                  }
                   return null;
                 },
               ),
-              renderTextFormField(
+              signUpTextFormField(
                 label: '비밀번호',
+                obscureOption: obscureToggle,
+                onTapIconButton: () {
+                  setState(() {
+                    obscureToggle = !obscureToggle;
+                  });
+                },
+                textInputAction: TextInputAction.next,
                 onSaved: (val) {
-                  setState((){
-                    this.password= val;
+                  obscureToggle = !obscureToggle;
+                },
+                validator: (val) {
+                  if (val.length < 1) {
+                    return '비밀번호는 필수사항입니다.';
+                  }
+                  if (!RegExp(
+                          r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?~^<>,.&+=])[A-Za-z\d$@$!%*#?~^<>,.&+=]{8,15}$')
+                      .hasMatch(val)) {
+                    return '특수문자, 대소문자, 숫자 포함 8자 이상 15자 이내로 입력하세요..';
+                  } else {
+                    this.temp_password = val;
+                    print("temp_password는 ${temp_password}");
+                  }
+                  return null;
+                },
+              ),
+              signUpTextFormField(
+                label: '비밀번호 확인',
+                obscureOption: obscureToggle,
+                onTapIconButton: () {
+                  setState(() {
+                    obscureToggle = !obscureToggle;
+                  });
+                },
+                textInputAction: TextInputAction.done,
+                onSaved: (val) {
+                  setState(() {
+                    this.password = val;
+                    Get.find<SignUpInformationController>()
+                        .assignPassword(password!);
                   });
                 },
                 validator: (val) {
-                  return null;
+                  if (temp_password == null) {
+                    return '비밀번호를 먼저 입력하세요';
+                  }
+
+                  if (val != temp_password) {
+                    return '입력한 비밀번호와 다릅니다.';
+                  }
                 },
               ),
-              renderTextFormField(
-                label: '비밀번호 확인',
-                onSaved: (val) {},
-                validator: (val) {
-                  return null;
-                },
+              signUpCheckButton(
+                formKey2: formKey,
               ),
-              renderButton(),
               Text("state: ${stateCode ?? 'basic route'} "),
               homeButton(callfrom: "signUpPage")
             ]),
           ),
         ));
   }
-
-  renderButton() {
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: Colors.green),
-        onPressed: () async {
-          if (_formKey.currentState!.validate()) {
-            _formKey.currentState!.save();
-            //formfield의 입력값을 분배하는거
-
-             Get.find<SignUpInformationController>().assignEmailAndPassword(email!,password!);
-            Get.snackbar('저장완료!', '폼 저장이 완료되었습니다!');
-            Get.toNamed("/signUpPage_2");
-          }
-
-        },
-        child: Text('저장하기!', style: TextStyle(color: Colors.white)));
-  }
-}
-
-renderTextFormField(
-    {
-    // renderTextFormField로 만든다.
-    required String? label,
-    required FormFieldSetter? onSaved,
-    required FormFieldValidator? validator,
-  }) {
-  return Column(
-    children: [
-      Row(
-        children: [
-          Text(
-            label!,
-            style: TextStyle(
-              fontSize: 15.0,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
-      TextFormField(
-        autofocus: true,
-        // autofocus 페이지로 들어오자마자 활성화하기
-        onSaved: onSaved,
-        validator: validator,
-        obscureText: label == '비밀번호' ? true : false,
-        textInputAction: TextInputAction.next,
-        keyboardType: label == '체중' ? TextInputType.number : TextInputType.text
-      ),
-      Container(height: 16.0)
-    ],
-  );
 }

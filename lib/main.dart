@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_bouncy/signInPage.dart';
-import 'package:flutter_application_bouncy/signUpAndIn/signUpPageAdditionalInfo.dart';
+import 'package:flutter_application_bouncy/signUpAndInformation/signUpPageAdditionalInfo.dart';
 import 'package:flutter_application_bouncy/signUpPage.dart';
 import 'package:flutter_application_bouncy/signedPage.dart';
 import 'package:get/get.dart';

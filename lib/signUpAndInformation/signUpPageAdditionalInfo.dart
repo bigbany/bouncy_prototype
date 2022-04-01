@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_bouncy/controller/signUpInformationGetxController.dart';
 import 'package:get/get.dart';
 
+import '../components/signUpTextFormField.dart';
+
 class signUpPageAdditionalInfo extends StatefulWidget {
   const signUpPageAdditionalInfo({Key? key}) : super(key: key);
 
@@ -35,13 +37,13 @@ class _signUpPageAdditionalInfoState extends State<signUpPageAdditionalInfo> {
       body: Center(child: Form(
         key: this._formKey2,
         child: Column(children: [
-          renderTextFormField(label: "체중", onSaved: (val){
-            setState((){
-              this.weight= double.parse(val);
-            });
-          }, validator:(val){
+          // signUpTextFormField(label: "체중", onSaved: (val){
+          //   setState((){
+          //     this.weight= double.parse(val);
+          //   });
+          // }, validator:(val){
             
-          }, ),
+          // }, ),
           renderButton2(),
 
           homeButton(callfrom: 'signUpPage_2')
