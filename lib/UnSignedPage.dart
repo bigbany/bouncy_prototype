@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'signedPage.dart';
+import 'loggedPage.dart';
 
 class UnSignedPage extends StatelessWidget {
   const UnSignedPage({ Key? key }) : super(key: key);
@@ -16,7 +16,7 @@ class UnSignedPage extends StatelessWidget {
         child: Column(
           children: [
             ElevatedButton(onPressed: (){
-              Get.toNamed("/signedPage");
+              Get.toNamed("/loggedPage");
             }, child: Text("already signed in")),
             ElevatedButton(onPressed: (){
               Get.toNamed("signInPage");

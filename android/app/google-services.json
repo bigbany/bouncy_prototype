@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "205048846478",
+    "project_id": "bounc-2022",
+    "storage_bucket": "bounc-2022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:205048846478:android:e932fcad481f9b768191df",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_bouncy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "205048846478-ef33fp8un9mp87fj62ed8anpjqd1d32b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR1bYXb3HCcKZtieMHv8LlHy2StirWe_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "205048846478-ef33fp8un9mp87fj62ed8anpjqd1d32b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

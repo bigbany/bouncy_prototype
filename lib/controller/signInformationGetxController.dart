@@ -1,12 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class SignUpInformationController extends GetxController {
+class SignInformationController extends GetxController {
   String? email;
   String? password;
   double? weight;
   double? height;
   String? gender;
+    String? temp_email;
+    // findaccountpage 에서도 해당 콘트롤러가 사용된다.
+String? emailSignIn;
+String? passwordSignIn;
+
+
+
+
+  void assignEmailSignIn(String inputEmailSignIn) {
+    emailSignIn = inputEmailSignIn;
+    print('From controller |emailSignIn 값은 ${emailSignIn}이다.');
+  }
+
+  void assignPasswordSignIn(String inputPasswordSignIn) {
+    passwordSignIn = inputPasswordSignIn;
+    print('From signInformation controller |passwordSignIn 값은 ${passwordSignIn}이다.');
+  }
+
+
 
   void assignEmail(String input_email) {
     email = input_email;
@@ -23,6 +42,11 @@ class SignUpInformationController extends GetxController {
     password = input_password;
     print("입력된 email은 ${email} 입력된 password는 ${password}");
   }
+
+  void assignTempEmail(String input_temp_email){
+  temp_email= input_temp_email;
+  print('From signinInformation cotroller | temp_email 값은 ${temp_email}이다.');
+}
 
   void assignWeightAndHeightAndGender(double input_Weight) {
     weight = input_Weight;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_bouncy/controller/signUpInformationGetxController.dart';
+import 'package:flutter_application_bouncy/controller/signInformationGetxController.dart';
 import 'package:get/get.dart';
 
 class homeButton extends StatelessWidget {
@@ -10,20 +10,19 @@ class homeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        Get.offAllNamed("/");
-
-    
-
-        print("homeButton is clicked from ${callfrom ?? "empty"}");
-      },
-      child: Text('Home Button'),
-      style: ElevatedButton.styleFrom(
-          primary: Color.fromARGB(235, 214, 18, 18),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          elevation: 0.0),
+    return Container(
+      child: ElevatedButton(
+        onPressed: () {
+          Get.offAllNamed('/');
+          print("homeButton is clicked from ${callfrom ?? "empty"}");
+        },
+        child: Text('Home Button'),
+        style: ElevatedButton.styleFrom(
+            primary: Color.fromARGB(235, 214, 18, 18),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            elevation: 0.0),
+      ),
     );
   }
 }
